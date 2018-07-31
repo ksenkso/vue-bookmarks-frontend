@@ -10,7 +10,12 @@
       </div>
     </div>
     <div class="bookmarks" v-if="bookmarks.length && !isLoading">
-      <Bookmark v-for="bookmark in bookmarks" :bookmark="bookmark" :key="bookmark.id"></Bookmark>
+      <Bookmark
+        v-for="bookmark in bookmarks"
+        :bookmark="bookmark"
+        :key="bookmark.id"
+        @deleted="deleteBookmark(bookmark.id)"
+      ></Bookmark>
     </div>
   </div>
 </template>
@@ -37,20 +42,24 @@
             }
           })
       },
-      editBookmark(id) {
-        this.$router.push({path: '/edit', params: {id}});
-      },
       deleteBookmark(id) {
-        const shouldProceed = confirm('Do You really want to delete this bookmark?');
-        if (shouldProceed) {
-          this.apiClient.deleteBookmark(id)
-            .then(() => this.bookmarks = this.bookmarks.filter(b => b.id !== id))
-            .catch(error => this.errors = this.errors.concat(error.errors));
-        }
+        this.bookmarks = this.bookmarks.filter(b => b.id !== id);
+      },
+      addTweenScript() {
+        const tweenLite = document.createElement('script');
+        tweenLite.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TweenLite.min.js';
+        document.head.appendChild(tweenLite);
+        const tl = document.createElement('script');
+        tl.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TimelineLite.min.js';
+        document.head.appendChild(tl);
+        const cssPlugin = document.createElement('script');
+        cssPlugin.src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/plugins/CSSPlugin.min.js"
+        document.head.appendChild(cssPlugin);
       }
     },
     created() {
-      this.fetchBookmarks()
+      this.fetchBookmarks();
+      this.addTweenScript();
     },
     data() {
       return {
@@ -62,6 +71,10 @@
   };
 </script>
 
-<style scoped lang="sass">
-
+<style lang="sass">
+body
+  /*background-image: repeating-linear-gradient(#ffa682, #ffa682 8px, transparent 8px, transparent 16px)*/
+.bookmarks
+  max-width: 100%
+  overflow-x: hidden
 </style>
