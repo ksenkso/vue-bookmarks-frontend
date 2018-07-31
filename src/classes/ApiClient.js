@@ -23,7 +23,7 @@ export default class ApiClient extends EventEmitter {
   set jwt(value) {
     this._jwt = value;
 
-    if (!!value) {
+    if (value) {
       localStorage.setItem('jwt', value);
       this.parsedJWT = parseJwt(value);
     } else {
