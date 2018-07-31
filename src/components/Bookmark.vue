@@ -1,12 +1,12 @@
 <template>
   <div class="bookmark">
     <a :href="bookmark.url" class="bookmark__link">
-      <h1 class="bookmark__title">{{bookmark.name}}</h1>
+      <h1 class="bookmark__title">{{bookmark.title}}</h1>
       <span class="bookmark__background" :class="backgroundClass" :style="{backgroundColor: bookmark.background}">
             <img
               class="bookmark__image"
               :src="bookmark.img | apiUrl"
-              :alt="bookmark.name"
+              :alt="bookmark.title"
             >
           </span>
     </a>
