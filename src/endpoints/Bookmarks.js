@@ -6,14 +6,14 @@ export default {
     }
   },
   create: {
-    url: '/bookmarks/create',
+    url: '/bookmarks',
     defaults: {
       method: 'POST'
     }
   },
   delete(id) {
     return {
-      url: '/bookmarks/delete/' + id,
+      url: '/bookmarks/' + id,
       defaults: {
         method: 'DELETE'
       }
