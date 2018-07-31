@@ -12,5 +12,5 @@ export default {
 </script>
 
 <style lang="sass">
-  @import "assets/sass/helpers/all"
+  @import "assets/sass/main"
 </style>
