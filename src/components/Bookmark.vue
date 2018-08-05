@@ -72,13 +72,7 @@
               height: 0,
               ease: Power2.easeInOut,
               onComplete: resolve
-            }, 0.2)
-          /*const tl = TweenLite
-            .to(this.$refs.el, .2, {
-              left: resultWidth,
-              ease: Power0.easeInOut,
-            });*/
-          // setTimeout(resolve, 40000);
+            }, 0.2);
         });
       },
     }
@@ -125,6 +119,12 @@
     background-color: rgba(44, 44, 44, 0.5)
     border-radius: 15px
     text-align: center
+    white-space: nowrap
+    text-overflow: ellipsis
+    align-self: center
+    max-width: 380px
+    overflow: hidden
+
   &__link
     display: flex
     flex-direction: column
@@ -138,6 +138,11 @@
     margin-top: 14px
     font-weight: bold
     font-family: 'PT Sans', sans-serif
+    max-width: 380px
+    height: 44px
+    overflow: hidden
+    text-overflow: ellipsis
+    white-space: nowrap
   &__buttons
     position: absolute
     top: 38px
