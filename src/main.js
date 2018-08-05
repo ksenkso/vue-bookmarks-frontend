@@ -5,6 +5,8 @@ import GoogleAuthPlugin from './plugins/GoogleAuthPlugin';
 import ApiClient from './classes/ApiClient';
 import LoginPage from './components/LoginPage';
 import IndexPage from './components/IndexPage';
+import CreatePage from './components/CreatePage';
+import store from './store/index';
 
 Vue.filter('apiUrl', value => {
   return ApiClient.BACKEND_BASE + value;
@@ -35,6 +37,13 @@ const routes = [
   {
     path: '/login',
     component: LoginPage
+  },
+  {
+    path: '/create',
+    component: CreatePage,
+    meta: {
+      requiresAuth: true
+    }
   }
 ];
 const router = new VueRouter({routes});
