@@ -42,7 +42,7 @@ router.beforeEach((to, from, next) => {
   console.log(to);
 
   if (to.matched.some(route => route.meta.requiresAuth)) {
-    if (!apiClient.jwtAlive()) {
+    if (!store.getters.isAuthenticated) {
       console.log('jwt down');
       next({path: '/login'});
     } else {
@@ -54,6 +54,7 @@ router.beforeEach((to, from, next) => {
 });
 
 new Vue({
+  store,
   router,
   render: h => h(App),
   provide: () => ({
