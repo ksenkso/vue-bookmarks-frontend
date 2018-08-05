@@ -14,11 +14,11 @@ export default {
           Vue.__gapiCalls = [];
         }
       });
-    Vue.prototype.$renderSignInButton = function(options) {
+    Vue.$renderSignInButton = function(options) {
       plugin.makeGAPICall(Vue, plugin.$_renderSignInButton.bind(null, options))
     };
-    Vue.prototype.$logoutFromGoogle = function() {
-      return plugin.makeGAPICall(Vue, plugin.$_logoutFromGoogle.bind(null, this.apiClient))
+    Vue.$logoutFromGoogle = function() {
+      return plugin.makeGAPICall(Vue, plugin.$_logoutFromGoogle.bind(null))
     };
   },
   makeGAPICall(Vue, call) {
@@ -36,9 +36,7 @@ export default {
     }, options);
     gapi.signin2.render(options.id, opts);
   },
-  $_logoutFromGoogle(apiClient) {
-    apiClient.jwt = null;
-    apiClient.user = null;
+  $_logoutFromGoogle() {
     return gapi.auth2.getAuthInstance().signOut();
   },
   loadApi() {
