@@ -230,5 +230,25 @@ export const initGoogleAPI = (cb, onError = e => console.error(e)) => {
 export const CLIENT_ID = '777688038969-dgf86lie7v6pkq4qr3p5rscd1atfu9cg.apps.googleusercontent.com';
 
 export const getComponent = (name) => $(`[data-component=${name}]`);
-
+export const errorHandler = (context, error) => {
+  if (error.response) {
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx
+    context.commit('setErrors', error.response.data.errors);
+    Promise.reject(error.response.data.errors);
+  } else if (error.request) {
+    // The request was made but no response was received
+    // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+    // http.ClientRequest in node.js
+    console.log(error.request);
+    Promise.reject(error.request);
+  } else {
+    // Something happened in setting up the request that triggered an Error
+    context.commit('setErrors', [error]);
+    console.log('Error', error.message);
+    Promise.reject(error.message);
+  }
+  console.log(error.config);
+  Promise.reject(error.config);
+};
 // TODO: Create condOnlyLatinChars to require user to use only Latin characters in their passwords
