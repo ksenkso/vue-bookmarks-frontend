@@ -16,31 +16,28 @@
         :key="bookmark.id"
         @deleted="deleteBookmark(bookmark.id)"
       ></Bookmark>
+      <router-link class="button" to="/create">Create</router-link>
+    </div>
+    <div class="alert" v-if="!bookmarks.length && !isLoading">
+      You do not have any bookmarks. Try to create one!
+      <router-link class="button" to="/create">Create</router-link>
     </div>
   </div>
 </template>
 
 <script>
+  import {mapGetters} from 'vuex';
   import LogoutButton from './LogoutButton';
   import Bookmark from './Bookmark';
   export default {
     name: 'IndexPage',
-    inject: ['apiClient'],
     components: {LogoutButton, Bookmark},
     methods: {
       fetchBookmarks() {
         this.isLoading = true;
-        this.apiClient
-          .getBookmarks()
-          .then(bookmarks => {
-            this.bookmarks = bookmarks;
-            this.isLoading = false;
-          })
-          .catch(error => {
-            if (error.errors) {
-              this.errors = error.errors;
-            }
-          })
+        this.$store.dispatch('getBookmarks')
+          .then(() => this.isLoading = false)
+          .catch(() => this.isLoading = false);
       },
       deleteBookmark(id) {
         this.bookmarks = this.bookmarks.filter(b => b.id !== id);
@@ -63,10 +60,12 @@
     },
     data() {
       return {
-        bookmarks: [],
         isLoading: true,
         errors: []
       }
+    },
+    computed: {
+      ...mapGetters(['bookmarks'])
     }
   };
 </script>
