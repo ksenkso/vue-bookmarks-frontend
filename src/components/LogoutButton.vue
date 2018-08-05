@@ -10,7 +10,8 @@ export default {
   inject: ['apiClient'],
   methods: {
     async logout() {
-      await this.$logoutFromGoogle();
+      await this.$store.dispatch('logout');
+      // await this.$logoutFromGoogle();
       this.$router.push('/login');
     }
   }
