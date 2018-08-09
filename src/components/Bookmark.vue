@@ -49,7 +49,7 @@
         const shouldDelete = confirm('Do you really want to delete this bookmark?');
         if (shouldDelete) {
           this.isDisabled = true;
-          this.apiClient.deleteBookmark(this.bookmark.id)
+          this.$store.dispatch('deleteBookmark', this.bookmark.id)
             .then(this.remove)
             .then(() => {
               this.$emit('deleted')
