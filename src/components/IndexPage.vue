@@ -1,8 +1,6 @@
 <template>
   <div class="page">
-    <header>
-      <LogoutButton></LogoutButton>
-    </header>
+    <Header></Header>
     <div class="loader" v-if="isLoading">Loading...</div>
     <div class="errors" v-if="errors.length">
       <div class="error" v-for="error in errors">
@@ -16,22 +14,24 @@
         :key="bookmark.id"
         @deleted="deleteBookmark(bookmark.id)"
       ></Bookmark>
-      <router-link class="button" to="/create">Create</router-link>
     </div>
     <div class="alert" v-if="!bookmarks.length && !isLoading">
       You do not have any bookmarks. Try to create one!
-      <router-link class="button" to="/create">Create</router-link>
+    </div>
+    <div class="text-center">
+      <router-link class="btn btn-primary btn-lg" to="/create">Create</router-link>
     </div>
   </div>
 </template>
 
 <script>
   import {mapGetters} from 'vuex';
-  import LogoutButton from './LogoutButton';
+  import Header from './Header';
   import Bookmark from './Bookmark';
+
   export default {
     name: 'IndexPage',
-    components: {LogoutButton, Bookmark},
+    components: {Header, Bookmark},
     methods: {
       fetchBookmarks() {
         this.isLoading = true;
@@ -40,7 +40,7 @@
           .catch(() => this.isLoading = false);
       },
       deleteBookmark(id) {
-        this.bookmarks = this.bookmarks.filter(b => b.id !== id);
+        this.$store.commit('removeBookmark', id);
       },
       addTweenScript() {
         const tweenLite = document.createElement('script');
@@ -50,7 +50,7 @@
         tl.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TimelineLite.min.js';
         document.head.appendChild(tl);
         const cssPlugin = document.createElement('script');
-        cssPlugin.src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/plugins/CSSPlugin.min.js"
+        cssPlugin.src = 'https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/plugins/CSSPlugin.min.js';
         document.head.appendChild(cssPlugin);
       }
     },
@@ -62,7 +62,7 @@
       return {
         isLoading: true,
         errors: []
-      }
+      };
     },
     computed: {
       ...mapGetters(['bookmarks'])
@@ -71,9 +71,7 @@
 </script>
 
 <style lang="sass">
-body
-  /*background-image: repeating-linear-gradient(#ffa682, #ffa682 8px, transparent 8px, transparent 16px)*/
-.bookmarks
-  max-width: 100%
-  overflow-x: hidden
+  .bookmarks
+    max-width: 100%
+    overflow-x: hidden
 </style>
