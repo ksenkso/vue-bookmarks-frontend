@@ -12,7 +12,7 @@
       <span class="bookmark__url">{{bookmark.url}}</span>
     </a>
     <div class="bookmark__buttons">
-      <button @click="editBookmark" type="button" class="bookmark__edit icon icon-edit">Edit</button>
+      <router-link :to="`/edit/${bookmark.id}`" class="bookmark__edit icon icon-edit"></router-link>
       <button @click="deleteBookmark" type="button" class="bookmark__delete icon icon-delete">Delete</button>
     </div>
   </div>

@@ -229,7 +229,25 @@ export const initGoogleAPI = (cb, onError = e => console.error(e)) => {
 // noinspection SpellCheckingInspection
 export const CLIENT_ID = '777688038969-dgf86lie7v6pkq4qr3p5rscd1atfu9cg.apps.googleusercontent.com';
 
-export const getComponent = (name) => $(`[data-component=${name}]`);
+export const loadGSAP = () => {
+  return Promise.all([
+    waitForScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TweenLite.min.js'),
+    waitForScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/TimelineLite.min.js'),
+    waitForScript('https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.1/plugins/CSSPlugin.min.js')
+  ]);
+};
+export const wait = time => {
+  return new Promise(resolve => setTimeout(resolve, time));
+};
+const waitForScript = (src) => {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+};
 export const errorHandler = (context, error) => {
   if (error.response) {
     // The request was made and the server responded with a status code

@@ -3,9 +3,7 @@ import VueRouter from 'vue-router';
 import App from './App.vue';
 import GoogleAuthPlugin from './plugins/GoogleAuthPlugin';
 import ApiClient from './classes/ApiClient';
-import LoginPage from './components/LoginPage';
-import IndexPage from './components/IndexPage';
-import CreatePage from './components/CreatePage';
+import routes from './routes';
 import store from './store/index';
 
 Vue.filter('apiUrl', value => {
@@ -26,26 +24,7 @@ Vue.use(VueRouter);
 
 const client_id = '777688038969-dgf86lie7v6pkq4qr3p5rscd1atfu9cg.apps.googleusercontent.com';
 Vue.use(GoogleAuthPlugin, {client_id});
-const routes = [
-  {
-    path: '/',
-    component: IndexPage,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
-    path: '/login',
-    component: LoginPage
-  },
-  {
-    path: '/create',
-    component: CreatePage,
-    meta: {
-      requiresAuth: true
-    }
-  }
-];
+
 const router = new VueRouter({routes});
 router.beforeEach((to, from, next) => {
   console.log(to);

@@ -1,45 +1,29 @@
 <template>
-  <div class="page">
-    <Header></Header>
+  <Page>
     <div class="container">
       <h1>Create new bookmark</h1>
-      <form class="form" action="#" @submit.prevent="submitForm">
-        <div class="form-group">
-          <label for="title">Title</label>
-          <input class="form-control" type="text" name="title" id="title" v-model="title">
-        </div>
-        <div class="form-group">
-          <label for="url">URL</label>
-          <input class="form-control" type="url" name="url" id="url" v-model="url">
-        </div>
-        <img :src="image" alt="Bookmark image">
-        <div class="form-group">
-          <button type="submit" class="btn btn-success">Save</button>
-        </div>
-      </form>
+      <EditForm @submit="submitForm"></EditForm>
     </div>
-  </div>
+  </Page>
 
 </template>
 
 <script>
-  import Header from './Header';
+  import Page from './Page';
+  import EditForm from './EditForm';
   export default {
     name: 'CreatePage',
-    components: {Header},
+    components: {Page, EditForm},
     data() {
       return {
-        title: '',
-        url: '',
-        image: ''
+        bookmark: {
+          title: '',
+          url: ''
+        }
       }
     },
     methods: {
-      submitForm() {
-        const bookmark = {
-          title: this.title,
-          url: this.url
-        };
+      submitForm(bookmark) {
         this.$store.dispatch('createBookmark', bookmark)
           .then(() => {
             this.$router.push('/');
